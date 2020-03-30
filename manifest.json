@@ -1,18 +1,18 @@
 {
-	"name": "yt-save-for-later",
-	"version": "0.0.1",
-	"description": "Save any youtube video with the current timestamp for later",
-  "permissions": [
-		"storage"
-	],
+	"name":"yt-save-for-later",
+  "version": "1.0",
+  "manifest_version": 2,
+	"description": "Saves the state of any youtube video and brings you back to the video where your left off" ,
 	"background": {
- 		"scripts": [
-			"background.js"
-		],
-   	"persistent": false
-   },
-   "page_action": {
-   	"default_popup": "extension.html"
-   },
-	"manifest_version": 2
+		"scripts": ["src/js/background.js"],
+		"persistent": false
+	},
+ 	"permissions": [
+		"storage",
+		"declarativeContent",
+		"activeTab"
+	],
+	"page_action": {
+		"default_popup": "src/views/popup.html"
+	}
 }

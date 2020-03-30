@@ -8,5 +8,6 @@
 - Searches for current value in ```.ytp-time-current```
 - saves video in this format for later ```protocol:youtube_url:video_id:timestamp```
 - then if you click on the video in your saved feed of vieos it will bring you to the timestamp your left off
-	
+- easy UI. doesn't look great but PR's welcome to fix that. maybe google material design?
+
 [lukasjoc](https://lukasjoc.com), 2020
