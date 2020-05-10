@@ -1,18 +1,18 @@
 {
+
+  "manifest_version": 2,
 	"name":"yt-save-for-later",
+	"description": "Saves the state of any youtube video and brings you back to the video where your left off",
   "version": "1.0",
   "manifest_version": 2,
-	"description": "Saves the state of any youtube video and brings you back to the video where your left off" ,
-	"background": {
-		"scripts": ["src/js/background.js"],
-		"persistent": false
-	},
- 	"permissions": [
-		"storage",
-		"declarativeContent",
+	
+	"permissions": [
 		"activeTab"
 	],
-	"page_action": {
-		"default_popup": "src/views/popup.html"
+
+	"browser_action": {
+	 	"default_icon": "src/icon.png",
+		"default_popup": "src/popup.html"
 	}
+
 }
