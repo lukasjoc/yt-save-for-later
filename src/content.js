@@ -1,8 +1,5 @@
 "use-strict"
 
-// here popup DOM logic
-"use-strict"
-
 // get dom content from backgroud communicatons
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 	if (msg.text === "report_back") {

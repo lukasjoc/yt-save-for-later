@@ -1,18 +1,44 @@
-{
 
-  "manifest_version": 2,
-	"name":"yt-save-for-later",
-	"description": "Saves the state of any youtube video and brings you back to the video where your left off",
-  "version": "1.0",
-  "manifest_version": 2,
+{
+	"manifest_version": 2,
+
+	"name": "yt-save-for-later",
+	"description": "Save yt-video for later (resume it where you left off)",
+	"short_name": "YTSFL",
+	"author": "lukasjoc",
+	"homepage_url": "https://lukasjoc.com",
+	"version": "1.0.0",
 	
-	"permissions": [
-		"activeTab"
+	"permissions": ["activeTab"],
+
+	"background": {
+    "persistent": false,
+    "scripts": ["src/background.js"]
+  },
+
+	"content_scripts": [
+		{
+			"matches": ["*://*.youtube.com/*"],
+    	"js": ["src/content.js"]
+		}
 	],
 
+	"icons": {
+  	"16":  "assets/icon16.png",
+  	"32":  "assets/icon32.png",
+  	"48":  "assets/icon48.png",
+  	"96":  "assets/icon96.png",
+  	"128": "assets/icon128.png"
+	},
+	
 	"browser_action": {
-	 	"default_icon": "src/icon.png",
-		"default_popup": "src/popup.html"
+  	"default_title": "Does a thing when you do a thing",
+  	"default_popup": "src/popup.html",
+  	"default_icon": {
+    	"19": "assets/icon19.png",
+    	"38": "assets/icon38.png"
+  	}
 	}
 
 }
+
