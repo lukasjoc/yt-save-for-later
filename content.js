@@ -1,6 +1,7 @@
 "use-strict"
 
 chrome.runtime.onMessage.addListener(getMessage)
+// TODO: where to save the data
 
 function getMessage(message, sendder, sendResponse) {
 	

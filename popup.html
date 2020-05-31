@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  	<style>
+			a, button {
+				cursor: pointer;
+			}
+
+			.wrapper {
+				display: flex;
+				flex-flow: column nowrap;
+				width: 300px;
+			}
+			
+			header, .video, .controls {
+				display: flex;
+				flex-flow: row nowrap;
+			}
+			
+			.video {
+				justify-content: space-around;
+				align-items: center;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+  <body>
+		<header>
+			<button class="add">
+				Add
+				<q class="title">
+					<strong>REPLACE_ME</strong>
+				</q>
+				to the list
+			</button>
+		</header>
+
+    <div class="wrapper">
+			
+			<div class="video">
+				
+				<div>
+					<h3 class="title">REPLACE_ME</h3>
+					<span class="current">00:00</span> / <span class="duration">00:00</span>
+					<span class="current-persant"> | <strong>0</strong> </span>% consumed
+				</div>
+				
+				<div class="controls">
+					<button class="resume">Resume</button>
+					<button class="delete">Delete</button>
+				</div>
+
+			</div>
+		</div>
+
+		<script src="popup.js"></script>
+	</body>
+</html>
+
