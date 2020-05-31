@@ -3,9 +3,9 @@
 console.log("DEBUG!! Content Script is loaded...")
 
 function get_title() {
-	let title = document.querySelector(".title")
+	let title = document.querySelector("h1.title")
 	console.log(`TITLE: ${title.innerText}`)
-	return title[0].innerText
+	return title.innerHTML
 }
 
 function get_duration() {
