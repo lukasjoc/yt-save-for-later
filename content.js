@@ -20,9 +20,24 @@ function get_current() {
 	return current.innerHTML
 }
 
-function calc_persant() {
-	// TODO: implement ME
-	return String(0)
+function calc_percent() {
+	duration_s = to_secs(get_duration())
+	current_s = to_secs(get_current())
+
+	return Math.round((current_s * 100) / duration_s)
+}
+
+// Taken from: https://stackoverflow.com/questions/9640266/convert-hhmmss-string-to-seconds-only-in-javascript
+function to_secs(str) {
+    var p = str.split(':'),
+        s = 0, m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+
+    return s;
 }
 
 // Start communicating with popup
@@ -36,7 +51,7 @@ function communicate(msg, sender, send_answer) {
 			title: get_title(),
 			duration: get_duration(),
 			current: get_current(),
-			persant: calc_persant(),
+			percent: calc_percent(),
 		}
 	
 		send_answer(payload)
