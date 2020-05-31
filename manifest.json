@@ -10,7 +10,6 @@
   	"96":  "assets/icon96.png",
   	"128": "assets/icon128.png"		
 	},
-	
 	"content_scripts": [
 		{
 			"matches": ["*://*.youtube.com/*"],
@@ -19,8 +18,7 @@
 	],
 
 	"browser_action": {
-		"default_title": "yt-save-for-later",
-  	"default_popup": "popup.html",
+		"default_popup": "popup.html",
 		"default_icon": {
 			"19": "assets/icon19.png",
 			"38": "assets/icon38.png"

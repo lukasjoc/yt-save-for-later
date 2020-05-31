@@ -24,7 +24,13 @@
 				justify-content: space-around;
 				align-items: center;
 				width: 100%;
+				display:none;
 			}
+
+			.tray-emty {
+				display: block;
+			}
+
 		</style>
 	</head>
 
@@ -32,21 +38,20 @@
 		<header>
 			<button class="add">
 				Add
-				<q class="title">
-					<strong>REPLACE_ME</strong>
-				</q>
+				<!--<q class="title"></q>-->
 				to the list
 			</button>
 		</header>
 
     <div class="wrapper">
 			
+			<span class="tray-emty"> 0 videos saved</span>
 			<div class="video">
 				
 				<div>
-					<h3 class="title">REPLACE_ME</h3>
-					<span class="current">00:00</span> / <span class="duration">00:00</span>
-					<span class="current-persant"> | <strong>0</strong> </span>% consumed
+					<h3 class="title"></h3>
+					<span class="current"></span> / <span class="duration"></span>
+					| <span class="current-persant"></span> % consumed
 				</div>
 				
 				<div class="controls">
