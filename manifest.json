@@ -4,22 +4,18 @@
 
 	"name": "yt-save-for-later",
 	"description": "Save yt-video for later (resume it where you left off)",
-	"short_name": "YTSFL",
 	"author": "lukasjoc",
 	"homepage_url": "https://lukasjoc.com",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	
-	"permissions": ["activeTab"],
-
 	"background": {
-    "persistent": false,
-    "scripts": ["src/background.js"]
+    "scripts": ["background.js"]
   },
 
 	"content_scripts": [
 		{
 			"matches": ["*://*.youtube.com/*"],
-    	"js": ["src/content.js"]
+    	"js": ["content.js"]
 		}
 	],
 
@@ -32,8 +28,6 @@
 	},
 	
 	"browser_action": {
-  	"default_title": "Does a thing when you do a thing",
-  	"default_popup": "src/popup.html",
   	"default_icon": {
     	"19": "assets/icon19.png",
     	"38": "assets/icon38.png"
