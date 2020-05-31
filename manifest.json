@@ -3,8 +3,7 @@
 	"manifest_version": 2,
 
 	"name": "yt-save-for-later",
-	"description": "Save yt-video for later (resume it where you left off)",
-	"author": "lukasjoc",
+	"description": "Saves the state of any youtube video and brings you back to the video where your left off",
 	"homepage_url": "https://lukasjoc.com",
 	"version": "0.0.1",
 	
