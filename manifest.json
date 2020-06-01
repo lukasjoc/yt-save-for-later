@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "yt-save-for-later",
-	"description": "Saves the state of any youtube video and brings you back to the video where your left off",
+	"description": "Save a yt-video for later. Resume where you left off",
 	"version": "0.1.0",
 	"icons": {
 		"16":  "assets/icon16.png",

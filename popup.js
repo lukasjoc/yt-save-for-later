@@ -20,26 +20,53 @@
 // }
 //
 
+///////////////////
 
-// SETUP INDEXDB
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+window.IDBTransaction = window.IDBTransaction ||  window.webkitIDBTransaction || window.msIDBTransaction;
+window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
 
+let db
 
+// est. cursor from databse (open the database)
+let req = window.indexedDB.open("ysfl_db")
+req.onsuccess = function(event) {
+	db = event.target.result
+	console.log(`SUCCESS: ${db}`)
+}
+
+req.onerror = function(event) {
+   console.log("ERR:")
+}
+
+// create a new object store
+req.onupgradeneeded = function (event) {
+	let db = event.target.result
+	let store = db.createObjectStore("videos", {keyPath : "id"})
+}
+
+// add to the object store
+const handle_answer = function (video) {	
+	let req = db.transaction(["videos"], "readwrite")
+	.objectStore("videos")
+	.add(video)
+
+	req.onsuccess = function(event) {
+		console.log(`added ${video}`)
+	}
+
+	req.onerror = function() {
+ 		console.log("Unable to add data\r\n already exists in your database! ")
+	}
+}
+
+////////
 
 let add_btn = document.querySelector(".add")
 add_btn.addEventListener("click", handle_add)
 
-// take data from content script and save it to indexedDB
-// TODO: check on add if item in
-const add = (info) => {
-	console.log(info)
-
-
-}
-
 // on button click communicate with content script to get current video data
-// then pipe the data to named function and then to localstorage. UNIT: YSFL
-function handle_add() {
-	
+function handle_add() {	
 	const params = {
 		active: true,
 		currentWindow: true
@@ -52,10 +79,7 @@ function handle_add() {
 			why: "add_video"
 		}
 	
-		chrome.tabs.sendMessage(tabs[0].id, payload, add)
+		chrome.tabs.sendMessage(tabs[0].id, payload, handle_answer)
 	}
 }
 
-
-function render_list() {
-}

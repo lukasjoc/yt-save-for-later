@@ -1,4 +1,4 @@
 # yt-save-for-later
-> Saves the state of any youtube video and brings you back to the video where your left off
+> Save a yt-video for later. Resume where you left off
 
 [lukasjoc](https://lukasjoc.com), 2020
