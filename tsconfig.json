@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "esnext",
+		"strict": true,
+		"moduleResolution": "node",
+		"removeComments": true,
+		"sourceMap": false,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		}
+	},
+	"include": [
+		"*.ts",
+		"*.vue",
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
