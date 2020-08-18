@@ -1,0 +1,18 @@
+#!/bin/bash
+
+rm -rf build; rm -rf .cache
+
+declare src build
+src=$PWD/src
+build=$PWD/build/
+./node_modules/parcel-bundler/bin/cli.js build \
+	-d "$build" \
+	--no-source-maps \
+	"$src/index.html" \
+	"$src/content.js" \
+	"$src/background.js"
+
+# some bodging
+cp manifest.json "$build"
+cp -a "$src/assets" "$build"
+tree "$build"
