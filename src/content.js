@@ -45,7 +45,6 @@ function calc_percent() {
 	return Math.round((calc_current_s() * 100) / calc_duration_s())
 }
 
-// Taken from: https://stackoverflow.com/questions/9640266/convert-hhmmss-string-to-seconds-only-in-javascript
 function to_secs(str) {
 	let p = str.split(":")
 	let s = 0
@@ -59,13 +58,9 @@ function to_secs(str) {
 	return s
 }
 
-// This handles the communication request initiated by popup.js
 chrome.runtime.onMessage.addListener(communicate)
 function communicate(msg, sender, send_answer) {
-	if ( (msg.from !== "popup") || (msg.why !== "add_video") ) {
-		return false
-	}
-	
+	if ( (msg.from !== "popup") || (msg.why !== "add_video") ) return false
 	let payload = {
 		id: get_id(),
 		channel: get_channel(),
@@ -75,9 +70,7 @@ function communicate(msg, sender, send_answer) {
 		current: get_current(),
 		percent: calc_percent()
 	}
-	console.log("DEBUG!!: PAYLOAD BEFORE SEND", payload)
 	send_answer(payload)
-
+	console.log(payload);
 	return true
 }
-
