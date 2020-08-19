@@ -49,18 +49,18 @@ function to_secs(str) {
 	let p = str.split(":")
 	let s = 0
 	let m = 1
-
 	while (p.length > 0) {
   	s += m * parseInt(p.pop(), 10)
     m *= 60
   }
-
 	return s
 }
 
-chrome.runtime.onMessage.addListener(communicate)
-function communicate(msg, sender, send_answer) {
-	if ( (msg.from !== "popup") || (msg.why !== "add_video") ) return false
+chrome.runtime.onMessage.addListener( (message, sender, send_response) => {
+	if ( (message.from !== "popup") || (message.why !== "add_video") ) {
+		throw "Source device is not accepted"
+		return
+	}
 	let payload = {
 		id: get_id(),
 		channel: get_channel(),
@@ -70,7 +70,6 @@ function communicate(msg, sender, send_answer) {
 		current: get_current(),
 		percent: calc_percent()
 	}
-	send_answer(payload)
-	console.log(payload);
-	return true
-}
+	send_response(payload)
+})
+
