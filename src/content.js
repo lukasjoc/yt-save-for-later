@@ -1,5 +1,7 @@
 "use-strict"
 
+// window.location.reload();
+
 function get_title() {
 	let title = document.querySelector("h1.title")
 	return title.innerText
@@ -13,6 +15,10 @@ function get_duration() {
 function get_current() {
 	let current = document.querySelector(".ytp-time-current")
 	return current.innerText
+}
+
+function get_current_url() {
+	return window.location
 }
 
 function get_id() {
@@ -34,7 +40,7 @@ function build_link() {
 }
 
 function calc_current_s() {
-	return to_secs(get_current()) 
+	return to_secs(get_current())
 }
 
 function calc_duration_s() {
@@ -50,26 +56,32 @@ function to_secs(str) {
 	let s = 0
 	let m = 1
 	while (p.length > 0) {
-  	s += m * parseInt(p.pop(), 10)
-    m *= 60
-  }
+		s += m * parseInt(p.pop(), 10)
+		m *= 60
+	}
 	return s
 }
 
-chrome.runtime.onMessage.addListener( (message, sender, send_response) => {
-	if ( (message.from !== "popup") || (message.why !== "add_video") ) {
-		throw "Source device is not accepted"
+chrome.runtime.onMessage.addListener((message, sender, send_response) => {
+	if (message.from === "popup" && message.why === "add_video") {
+		let payload = {
+			id: get_id(),
+			channel: get_channel(),
+			link: build_link(),
+			title: get_title(),
+			duration: get_duration(),
+			current: get_current(),
+			percent: calc_percent()
+		}
+	}else if (message.from === "popup" && message.why === "detect_page")  {
+		let payload = {
+			url: get_current_url()
+		}
+	}else {
+		throw "Device not recognized..."
 		return
 	}
-	let payload = {
-		id: get_id(),
-		channel: get_channel(),
-		link: build_link(),
-		title: get_title(),
-		duration: get_duration(),
-		current: get_current(),
-		percent: calc_percent()
-	}
-	send_response(payload)
+	send_response(payload || {})
+	return true
 })
 

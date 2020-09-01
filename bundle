@@ -15,4 +15,5 @@ build=$PWD/build/
 # some bodging
 cp manifest.json "$build"
 cp -a "$src/assets" "$build"
+# cp -a "$src/_locales" "$build"
 tree "$build"

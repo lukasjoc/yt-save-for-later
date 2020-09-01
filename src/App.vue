@@ -1,33 +1,38 @@
 <template>
 	<div id="app">
-		<div class="popup pure-g">
-			<button class="pure-button button-xsmall" type="button" @click="addVideo">Add</button>
-			<div v-if="data" v-for="(video, index) in data" :key="index">
-				<div class="pure-u-1-3">
-					<h3>{{video.title}}</h3>
-					<span>{{video.current}}</span> /
-					<span>{{video.duration}}</span>
-					<span>{{video.percent}} % consumed</span>
-				</div>
-				<div>
-					<a target="_blank" :href="video.link"><button type="button" class="pure-button button-xsmall">Resume</button></a>
-					<button type="button" class="button-error pure-button button-xsmall" @click="deleteVideo(video.id)">Delete</button>
-				</div>
+
+		<header>
+			<h1>yt-save-for-later</h1>
+			<div v-if="displayAdd()" class="header">
+				<button class="ytbutton" @click="addVideo"> Add </button>
 			</div>
-			<div v-else>
-				Add new video by clicking the Add button
+		</header>
+
+		<div class="card-list">
+			<div class="card dominant-color" v-for="(video, index) in data" :key="index">
+				<div class="card-header">
+					<span>{{video.channel}}</span>
+					<h2>{{video.title}}</h2>
+				</div>
+				<div class="card-footer">
+					<!--span>{{getDominantColor(video.id)}}</span>-->
+					<span>{{video.percent}} &#37; consumed</span>
+					<a target="_blank" :href="video.link"><button>Resume</button></a>
+					<button @click="deleteVideo(video.id)">Delete</button>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+
+// import analyze from "rgbaster"
+
 module.exports = {
 	name: "App",
 	created() {
-		if(localStorage.videos) {
-			this.data = JSON.parse(localStorage.videos)
-		}
+		if (localStorage.videos) this.data = JSON.parse(localStorage.videos);
 	},
 	data: () => {
 		return {
@@ -36,41 +41,127 @@ module.exports = {
 	},
 
 	methods: {
+
+		// TODO: show a message if localStorage is emty
 		// TODO: check if update is neccessary
+
+		//TODO: get background color of video for card
+		// async getDominantColor(id) {
+		//	var img = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+		//	const result = await analyze(img)
+		//	console.log(result)
+		// },
+
+		// TODO: just show the add button on youtube pages
+		displayAdd() {
+			const pattern = "^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
+			let str = this.getUrlFromSite()
+			console.log(str)
+			// if(str.match(pattern)) return true
+			return false
+		},
+
+		getUrlFromSite() {
+			const props = {
+				currentWindow: true,
+				active: true,
+			};
+			chrome.tabs.query(props, (tabs) => {
+				const payload = {
+					from: "popup",
+					why: "detect_page",
+				};
+				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
+					console.log(res)
+					return res
+				});
+			});
+		},
+
 		addVideo() {
 			const props = {
 				currentWindow: true,
 				active: true,
-			}
+			};
 			chrome.tabs.query(props, (tabs) => {
 				const payload = {
 					from: "popup",
 					why: "add_video",
-				}
-			chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
-					this.data.push(res)
-					localStorage.setItem("videos", JSON.stringify(this.data))
+				};
+				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
+					this.data.push(res);
+					localStorage.setItem("videos", JSON.stringify(this.data));
 					console.log(this.data);
-				})
-			})
+				});
+			});
 		},
 		deleteVideo(id) {
- 			let videos = JSON.parse(localStorage.videos)
-			for(i = 0; i <= videos.length; i++) {
-				if(videos[i].id === id) {
-					videos.splice(i, 1)
-				}
+			let videos = JSON.parse(localStorage.videos);
+			for (i = 0; i <= videos.length; i++) {
+				// if (videos[i].id === id) {
+				//	videos.splice(i, 1);
+				// }
+				console.log(videos[i].id, id)
 			}
-			this.data = videos
-			localStorage.setItem("videos", JSON.parse(this.data))
- 		} 
+			// this.data = videos;
+			// localStorage.setItem("videos", JSON.parse(this.data));
+		},
+
 	},
 };
 </script>
 
 <style scoped>
-.popup {
+
+html, body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.card,
+header {
+	padding: 1rem;
+}
+
+header {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#app,
+.card,
+.card-list {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+#app {
 	width: 300px;
-	height: 300px;
+}
+
+.card-list,
+.card-header,
+.card-footer {
+	width: 100%;
+}
+
+.card {
+	width: 80%;
+	background-color: #f9f9f9;
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	margin-bottom: 1rem;
+}
+
+.card-list {
+	height: 100%;
+	justify-content: center;
+	align-items: center;
 }
 </style>
+

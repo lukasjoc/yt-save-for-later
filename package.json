@@ -24,6 +24,7 @@
 		"vue-template-compiler": "^2.6.11"
 	},
 	"dependencies": {
+		"rgbaster": "^2.1.1",
 		"vue": "^2.6.11"
 	}
 }
