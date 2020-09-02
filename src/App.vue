@@ -1,19 +1,16 @@
 <template>
 	<div id="app">
-
 		<header>
 			<h1>yt-save-for-later</h1>
-			<!--<div v-if="displayAdd" class="header">
+			<div v-if="isAddable" class="header">
 				<button class="ytbutton" @click="addVideo"> Add </button>
-			</div> -->
-			<button class="ytbutton" @click="addVideo"> Add </button>
+			</div>
 		</header>
-
 		<div class="card-list">
 			<div class="card dominant-color" v-for="(video, index) in data" :key="index">
 				<div class="card-header">
 					<span>{{video.channel}}</span>
-					<h2>{{video.title}}</h2>
+					<h4>{{video.title}}</h4>
 				</div>
 				<div class="card-footer">
 					<span>{{video.percent}} &#37; consumed</span>
@@ -31,19 +28,37 @@
 
 module.exports = {
 	name: "App",
+
+
+	// run when component is created lifecycle
 	created() {
-		if (localStorage.videos) this.data = JSON.parse(localStorage.videos);
+
+		// TODO: create seperate content scrupt for pagedetect because it has to run on all sites
+		// talk to that site in this req directly
+		this.detectPage()
+		// communicate with content script and get meta data for current url detection
+		// this.detectPage()
+		// console.log(this.url)
+	// 	if (this.url.host === "www.youtube.com" && this.url.pathname ==="/watch") {
+	// 		this.isAddable = true
+	// 	}
+
+		// lookup localStorage for videos entry and pre allocate data
+		if (localStorage.videos === null) localStorage.removeItem(videos)
+		if (localStorage.videos) this.data = JSON.parse(localStorage.videos)
+
 	},
+
 	data: () => {
 		return {
 			data: [],
+			origin: "POPUP_HTML",
+			url: {},
+			isAddable: false
 		};
 	},
 
 	methods: {
-
-		// TODO: show a message if localStorage is emty
-		// TODO: check if update is neccessary
 
 		//TODO: get background color of video for card
 		// async getDominantColor(id) {
@@ -52,31 +67,25 @@ module.exports = {
 		//	console.log(result)
 		// },
 
-		// TODO: just show the add button on youtube pages
-		/// displayAdd() {
-		//			const pattern = "^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
-		//			let str = this.getUrlFromSite()
-		//			console.log(str)
-		//			// if(str.match(pattern)) return true
-		//			return false
-		//		},
+		// detect current page for add button actions
+		detectPage() {
+			const props = {
+				currentWindow: true,
+				active: true,
+			};
+			chrome.tabs.query(props, (tabs) => {
+				const payload = {
+					from: this.origin,
+					why: "DETECT_PAGE",
+				};
+				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
+					console.log(res)
+					this.url = res
+					return res
+				});
+			});
+		},
 
-		//	getUrlFromSite() {
-		//		const props = {
-		//			currentWindow: true,
-		//			active: true,
-		//		};
-		//		chrome.tabs.query(props, (tabs) => {
-		//			const payload = {
-		//				from: "popup",
-		//				why: "detect_page",
-		//			};
-		//			chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
-		//				console.log(res)
-		//				return res
-		//			});
-		//		});
-		//	},
 		addVideo() {
 			const props = {
 				currentWindow: true,
@@ -84,22 +93,25 @@ module.exports = {
 			};
 			chrome.tabs.query(props, (tabs) => {
 				const payload = {
-					from: "popup",
-					why: "add_video",
+					from: this.origin,
+					why: "ADD_VIDEO",
 				};
 				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
-					this.data.push(res);
+					console.log(res)
+					this.data.push(res)
+					console.log(this.data)
 					localStorage.setItem("videos", JSON.stringify(this.data));
-					console.log(this.data);
 				});
 			});
 		},
+
 		deleteVideo(id) {
-			for(let i of this.data) {
-				if(i.id === id) this.data.shift(id, 1)
+			for(let video of this.data) {
+				if(video.id === id) this.data.shift(id, 1)
 			}
 			localStorage.setItem("videos", JSON.stringify(this.data));
 		},
+
 	},
 
 };
