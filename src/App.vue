@@ -3,9 +3,10 @@
 
 		<header>
 			<h1>yt-save-for-later</h1>
-			<div v-if="displayAdd()" class="header">
+			<!--<div v-if="displayAdd" class="header">
 				<button class="ytbutton" @click="addVideo"> Add </button>
-			</div>
+			</div> -->
+			<button class="ytbutton" @click="addVideo"> Add </button>
 		</header>
 
 		<div class="card-list">
@@ -15,7 +16,6 @@
 					<h2>{{video.title}}</h2>
 				</div>
 				<div class="card-footer">
-					<!--span>{{getDominantColor(video.id)}}</span>-->
 					<span>{{video.percent}} &#37; consumed</span>
 					<a target="_blank" :href="video.link"><button>Resume</button></a>
 					<button @click="deleteVideo(video.id)">Delete</button>
@@ -53,31 +53,30 @@ module.exports = {
 		// },
 
 		// TODO: just show the add button on youtube pages
-		displayAdd() {
-			const pattern = "^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
-			let str = this.getUrlFromSite()
-			console.log(str)
-			// if(str.match(pattern)) return true
-			return false
-		},
+		/// displayAdd() {
+		//			const pattern = "^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
+		//			let str = this.getUrlFromSite()
+		//			console.log(str)
+		//			// if(str.match(pattern)) return true
+		//			return false
+		//		},
 
-		getUrlFromSite() {
-			const props = {
-				currentWindow: true,
-				active: true,
-			};
-			chrome.tabs.query(props, (tabs) => {
-				const payload = {
-					from: "popup",
-					why: "detect_page",
-				};
-				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
-					console.log(res)
-					return res
-				});
-			});
-		},
-
+		//	getUrlFromSite() {
+		//		const props = {
+		//			currentWindow: true,
+		//			active: true,
+		//		};
+		//		chrome.tabs.query(props, (tabs) => {
+		//			const payload = {
+		//				from: "popup",
+		//				why: "detect_page",
+		//			};
+		//			chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
+		//				console.log(res)
+		//				return res
+		//			});
+		//		});
+		//	},
 		addVideo() {
 			const props = {
 				currentWindow: true,
@@ -96,18 +95,13 @@ module.exports = {
 			});
 		},
 		deleteVideo(id) {
-			let videos = JSON.parse(localStorage.videos);
-			for (i = 0; i <= videos.length; i++) {
-				// if (videos[i].id === id) {
-				//	videos.splice(i, 1);
-				// }
-				console.log(videos[i].id, id)
+			for(let i of this.data) {
+				if(i.id === id) this.data.shift(id, 1)
 			}
-			// this.data = videos;
-			// localStorage.setItem("videos", JSON.parse(this.data));
+			localStorage.setItem("videos", JSON.stringify(this.data));
 		},
-
 	},
+
 };
 </script>
 

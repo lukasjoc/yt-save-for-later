@@ -1,7 +1,5 @@
 "use-strict"
 
-// window.location.reload();
-
 function get_title() {
 	let title = document.querySelector("h1.title")
 	return title.innerText
@@ -73,15 +71,16 @@ chrome.runtime.onMessage.addListener((message, sender, send_response) => {
 			current: get_current(),
 			percent: calc_percent()
 		}
-	}else if (message.from === "popup" && message.why === "detect_page")  {
+		send_response(payload)
+	}
+
+	if (message.from === "popup" && message.why === "detect_page") {
 		let payload = {
 			url: get_current_url()
 		}
-	}else {
-		throw "Device not recognized..."
-		return
+		send_response(payload)
 	}
-	send_response(payload || {})
+
 	return true
 })
 
