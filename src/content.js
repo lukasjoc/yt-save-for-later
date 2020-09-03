@@ -55,13 +55,8 @@ function toSeconds(str) {
 	return s
 }
 
-function getCurrententURL() {
-	return window.location
-}
-
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 	if (msg.from === "POPUP_HTML" && msg.why === "ADD_VIDEO") {
-
 		let payload = {
 			id: getvID(),
 			channel: getChannel(),
@@ -75,8 +70,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 		return true
 
 	} else if (msg.from === "POPUP_HTML" && msg.why === "DETECT_PAGE") {
-		
-		let payload = { url : getCurrententURL() }
+		let win = window.location
+		let payload = {
+			hostname: win.hostname,
+			pathname: win.pathname
+		}
 		sendResponse(payload)
 		return true
 	}

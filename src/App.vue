@@ -1,4 +1,4 @@
-<template>
+<template>k
 	<div id="app">
 		<header>
 			<h1>yt-save-for-later</h1>
@@ -29,45 +29,20 @@
 module.exports = {
 	name: "App",
 
-
-	// run when component is created lifecycle
 	created() {
-
-		// TODO: create seperate content scrupt for pagedetect because it has to run on all sites
-		// talk to that site in this req directly
 		this.detectPage()
-		// communicate with content script and get meta data for current url detection
-		// this.detectPage()
-		// console.log(this.url)
-	// 	if (this.url.host === "www.youtube.com" && this.url.pathname ==="/watch") {
-	// 		this.isAddable = true
-	// 	}
-
-		// lookup localStorage for videos entry and pre allocate data
 		if (localStorage.videos === null) localStorage.removeItem(videos)
 		if (localStorage.videos) this.data = JSON.parse(localStorage.videos)
-
 	},
-
 	data: () => {
 		return {
 			data: [],
 			origin: "POPUP_HTML",
-			url: {},
 			isAddable: false
 		};
 	},
 
 	methods: {
-
-		//TODO: get background color of video for card
-		// async getDominantColor(id) {
-		//	var img = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
-		//	const result = await analyze(img)
-		//	console.log(result)
-		// },
-
-		// detect current page for add button actions
 		detectPage() {
 			const props = {
 				currentWindow: true,
@@ -79,9 +54,9 @@ module.exports = {
 					why: "DETECT_PAGE",
 				};
 				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
-					console.log(res)
-					this.url = res
-					return res
+					if (res.hostname === "www.youtube.com" && res.pathname === "/watch") {
+						this.isAddable = true
+					}
 				});
 			});
 		},
@@ -97,9 +72,7 @@ module.exports = {
 					why: "ADD_VIDEO",
 				};
 				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
-					console.log(res)
 					this.data.push(res)
-					console.log(this.data)
 					localStorage.setItem("videos", JSON.stringify(this.data));
 				});
 			});
