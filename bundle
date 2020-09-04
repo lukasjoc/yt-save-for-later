@@ -13,7 +13,7 @@ build=$PWD/build/
 	"$src/background.js"
 
 # some bodging
-cp manifest.json "$build"
+cp $src/manifest.json "$build"
 cp -a "$src/assets" "$build"
 # cp -a "$src/_locales" "$build"
 tree "$build"

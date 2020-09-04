@@ -55,29 +55,30 @@ function toSeconds(str) {
 	return s
 }
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-	if (msg.from === "POPUP_HTML" && msg.why === "ADD_VIDEO") {
-		let payload = {
-			id: getvID(),
-			channel: getChannel(),
-			link: buildLink(),
-			title: getTitle(),
-			duration: getDuration(),
-			current: getCurrent(),
-			percent: calcPercent()
-		}
-		sendResponse(payload)
-		return true
+window.addEventListener('load', function () {
+	chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+		if (msg.from === "POPUP_HTML" && msg.why === "ADD_VIDEO") {
+			let payload = {
+				id: getvID(),
+				channel: getChannel(),
+				link: buildLink(),
+				title: getTitle(),
+				duration: getDuration(),
+				current: getCurrent(),
+				percent: calcPercent()
+			}
+			sendResponse(payload)
+			return true
 
-	} else if (msg.from === "POPUP_HTML" && msg.why === "DETECT_PAGE") {
-		let win = window.location
-		let payload = {
-			hostname: win.hostname,
-			pathname: win.pathname
+		} else if (msg.from === "POPUP_HTML" && msg.why === "DETECT_PAGE") {
+			let win = window.location
+			let payload = {
+				hostname: win.hostname,
+				pathname: win.pathname
+			}
+			sendResponse(payload)
+			return true
 		}
-		sendResponse(payload)
-		return true
-	}
+	})
 })
-
 

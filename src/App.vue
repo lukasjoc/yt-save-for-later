@@ -1,4 +1,4 @@
-<template>k
+<template>
 	<div id="app">
 		<header>
 			<h1>yt-save-for-later</h1>
@@ -7,7 +7,7 @@
 			</div>
 		</header>
 		<div class="card-list">
-			<div class="card dominant-color" v-for="(video, index) in data" :key="index">
+			<div class="card" v-for="(video, index) in data" :key="index">
 				<div class="card-header">
 					<span>{{video.channel}}</span>
 					<h4>{{video.title}}</h4>
@@ -24,8 +24,6 @@
 
 <script>
 
-// import analyze from "rgbaster"
-
 module.exports = {
 	name: "App",
 
@@ -34,11 +32,12 @@ module.exports = {
 		if (localStorage.videos === null) localStorage.removeItem(videos)
 		if (localStorage.videos) this.data = JSON.parse(localStorage.videos)
 	},
+
 	data: () => {
 		return {
 			data: [],
 			origin: "POPUP_HTML",
-			isAddable: false
+			isAddable: false,
 		};
 	},
 
