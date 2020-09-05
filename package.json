@@ -26,8 +26,6 @@
 		"vue-template-compiler": "^2.6.11"
 	},
 	"dependencies": {
-		"colorthief": "^2.3.2",
-		"node-vibrant": "^3.1.5",
 		"vue": "^2.6.11"
 	}
 }

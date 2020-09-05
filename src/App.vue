@@ -109,10 +109,7 @@ export default {
 		deleteVideo(vidID) {
 			if(this.data.length <= 0) this.data.splice(0, 1)
 			for(let i = 0; i < this.data.length; i++) {
-				if(this.data[i].vID === vidID) {
-					this.data.splice(i, 1)
-					console.log(this.data)
-				}
+				if(this.data[i].vID === vidID) this.data.splice(i, 1)
 			}
 			this.save()
 		},
