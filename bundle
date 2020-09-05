@@ -5,7 +5,7 @@ rm -rf build; rm -rf .cache
 declare src build
 src=$PWD/src
 build=$PWD/build/
-./node_modules/parcel-bundler/bin/cli.js build \
+"$PWD/node_modules/parcel-bundler/bin/cli.js" build \
 	-d "$build" \
 	--no-source-maps \
 	"$src/index.html" \
@@ -13,7 +13,6 @@ build=$PWD/build/
 	"$src/background.js"
 
 # some bodging
-cp $src/manifest.json "$build"
+cp "$src/manifest.json" "$build"
 cp -a "$src/assets" "$build"
-# cp -a "$src/_locales" "$build"
 tree "$build"

@@ -55,11 +55,11 @@ function toSeconds(str) {
 	return s
 }
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
 	chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 		if (msg.from === "POPUP_HTML" && msg.why === "ADD_VIDEO") {
 			let payload = {
-				id: getvID(),
+				vID: getvID(),
 				channel: getChannel(),
 				link: buildLink(),
 				title: getTitle(),
@@ -69,7 +69,6 @@ window.addEventListener('load', function () {
 			}
 			sendResponse(payload)
 			return true
-
 		} else if (msg.from === "POPUP_HTML" && msg.why === "DETECT_PAGE") {
 			let win = window.location
 			let payload = {
