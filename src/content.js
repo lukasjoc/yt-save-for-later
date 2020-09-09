@@ -22,7 +22,7 @@ function getvID() {
 }
 
 function getChannel() {
-	let channel = document.querySelector(".ytd-channel-name")
+	let channel = document.querySelector(".yt-formatted-string")
 	return channel.innerText
 }
 
