@@ -1,71 +1,76 @@
 "use-strict"
 
-function getTitle() {
-	let title = document.querySelector("h1.title")
-	return title.innerText
-}
+class Content {
 
-function getDuration() {
-	let duration = document.querySelector(".ytp-time-duration")
-	return duration.innerText
-}
-
-function getCurrent() {
-	let current = document.querySelector(".ytp-time-current")
-	return current.innerText
-}
-
-function getvID() {
-	let location = window.location
-	let s = location.search
-	return s.match(/[^=]{8,}/)[0]
-}
-
-function getChannel() {
-	let channel = document.querySelector(".yt-formatted-string")
-	return channel.innerText
-}
-
-function buildLink() {
-	let h = window.location.href
-	let t = calcCurrentS()
-	return `${h}&t=${t}`
-}
-
-function calcCurrentS() {
-	return toSeconds(getCurrent())
-}
-
-function calcDurationS() {
-	return toSeconds(getDuration())
-}
-
-function calcPercent() {
-	return Math.round((calcCurrentS()*100)/calcDurationS())
-}
-
-function toSeconds(str) {
-	let p = str.split(":")
-	let s = 0
-	let m = 1
-	while (p.length > 0) {
-		s += m*parseInt(p.pop(), 10)
-		m *= 60
+	getTitle() {
+		let title = document.querySelector("h1.title")
+		return title.innerText
 	}
-	return s
+
+	getDuration() {
+		let duration = document.querySelector(".ytp-time-duration")
+		return duration.innerText
+	}
+
+	getCurrent() {
+		let current = document.querySelector(".ytp-time-current")
+		return current.innerText
+	}
+
+	getvID() {
+		let location = window.location
+		let s = location.search
+		return s.match(/[^=]{8,}/)[0]
+	}
+
+	getChannel() {
+		let channel = document.querySelector(".ytd-channel-name > yt-formatted-string")
+		return channel.innerText
+	}
+
+	buildLink() {
+		let h = window.location.href
+		let t = this.calcCurrentS()
+		return `${h}&t=${t}`
+	}
+
+	calcCurrentS() {
+		return this.toSeconds(this.getCurrent())
+	}
+
+	calcDurationS() {
+		return this.toSeconds(this.getDuration())
+	}
+
+	calcPercent() {
+		return Math.round((this.calcCurrentS()*100)/this.calcDurationS())
+	}
+
+	toSeconds(str) {
+		let p = str.split(":")
+		let s = 0
+		let m = 1
+		while (p.length > 0) {
+			s += m*parseInt(p.pop(), 10)
+			m *= 60
+		}
+		return s
+	}
+
 }
 
-window.addEventListener("load", function () {
+window.addEventListener("load", () =>  {
 	chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 		if (msg.from === "POPUP_HTML" && msg.why === "ADD_VIDEO") {
+			const content = new Content()
 			let payload = {
-				vID: getvID(),
-				channel: getChannel(),
-				link: buildLink(),
-				title: getTitle(),
-				duration: getDuration(),
-				current: getCurrent(),
-				percent: calcPercent()
+				vID: content.getvID(),
+				channel: content.getChannel(),
+				link: content.buildLink(),
+				title: content.getTitle(),
+				duration: content.getDuration(),
+				current: content.getCurrent(),
+				percent: content.calcPercent()
 			}
 			sendResponse(payload)
 			return true
@@ -80,4 +85,3 @@ window.addEventListener("load", function () {
 		}
 	})
 })
-
