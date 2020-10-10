@@ -1,37 +1,36 @@
 {
-	"manifest_version": 2,
-	"name": "yt-save-for-later",
-	"description": "Save a yt video for later. Resume where you left off",
-	"version": "0.0.2",
-	"permissions": [
-		"tabs",
-		"declarativeContent"
-	],
-	"background": {
-		"scripts": ["background.js"],
-		"persistent": false
-	},
-	"content_scripts": [{
-		"document_idle": true,
-		"matches": ["<all_urls>"],
-		"js": ["./content.js"]
-	}],
-	"browser_action": {
-		"default_title": "yt-save-for-later",
-		"default_popup": "index.html",
-		"default_icon": {
-			"16":  "./assets/icon16.png",
-			"32":  "./assets/icon32.png",
-			"48":  "./assets/icon48.png",
-			"96":  "./assets/icon96.png",
-			"128": "./assets/icon128.png"
-		}
-	},
-	"icons": {
-		"16":  "./assets/icon16.png",
-		"32":  "./assets/icon32.png",
-		"48":  "./assets/icon48.png",
-		"96":  "./assets/icon96.png",
-		"128": "./assets/icon128.png"
-	}
+  "manifest_version": 2,
+  "name": "yt-save-for-later",
+  "description": "Save a yt video for later. Resume where you left off",
+  "version": "0.0.2",
+  "permissions": ["tabs", "declarativeContent"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "document_idle": true,
+      "matches": ["<all_urls>"],
+      "js": ["./content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_title": "yt-save-for-later",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "./assets/icon16.png",
+      "32": "./assets/icon32.png",
+      "48": "./assets/icon48.png",
+      "96": "./assets/icon96.png",
+      "128": "./assets/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "./assets/icon16.png",
+    "32": "./assets/icon32.png",
+    "48": "./assets/icon48.png",
+    "96": "./assets/icon96.png",
+    "128": "./assets/icon128.png"
+  }
 }
