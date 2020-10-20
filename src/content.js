@@ -23,7 +23,7 @@ const toSeconds = (str) => {
 	let s = 0
 	let m = 1
 	while (p.length > 0) {
-		s += m * parseInt(p.pop(), 10)
+		s += m * parseInt(p.pop(), 10) //  es6y -> +p.pop()
 		m *= 60
 	}
 	return s
