@@ -10,7 +10,7 @@ const getvID = () => window.location.search.match(/[^=]{8,}/)[0]
 
 const getChannel = () => document.querySelector(".ytd-channel-name > yt-formatted-string").innerText
 
-const buildLink = () => `${window.location.href}&t=${calcCurrentS}`
+const buildLink = () => `${window.location.href}&t=${calcCurrentS()}`
 
 const calcCurrentS = () =>  toSeconds(getCurrent())
 
