@@ -30,9 +30,9 @@ export default {
 	name: "App",
 
 	created() {
-		this.detectPage()
-		if (localStorage.videos === null) localStorage.removeItem("videos")
-		if (localStorage.videos) this.data = JSON.parse(localStorage.videos)
+		this.detectPage();
+		if (localStorage.videos === null) localStorage.removeItem("videos");
+		if (localStorage.videos) this.data = JSON.parse(localStorage.videos);
 	},
 
 	data: () => {
@@ -40,7 +40,7 @@ export default {
 			data: [],
 			origin: "POPUP_HTML",
 			isAddable: false,
-		}
+		};
 	},
 
 	methods: {
@@ -49,80 +49,80 @@ export default {
 			const props = {
 				currentWindow: true,
 				active: true,
-			}
+			};
 
 			chrome.tabs.query(props, (tabs) => {
 				const payload = {
 					from: this.origin,
 					why: "DETECT_PAGE",
-				}
+				};
 
 				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
 					if (res.hostname === "www.youtube.com" && res.pathname === "/watch") {
-						this.isAddable = true
+						this.isAddable = true;
 					}
-				})
-			})
+				});
+			});
 		},
 
 		addVideo() {
 			const props = {
 				currentWindow: true,
 				active: true,
-			}
+			};
 
 			chrome.tabs.query(props, (tabs) => {
 				const payload = {
 					from: this.origin,
 					why: "ADD_VIDEO",
-				}
+				};
 
 				chrome.tabs.sendMessage(tabs[0].id, payload, (res) => {
 					if(this.hasVideo(res.vID)) {
-						this.updateKeepIdx(res)
-						this.save()
-						return
+						this.updateKeepIdx(res);
+						this.save();
+						return;
 					}
-					this.data.push(res)
-					this.save()
-					return
-				})
-			})
+					this.data.push(res);
+					this.save();
+					return;
+				});
+			});
 		},
 
 		// if video exists return true else false
 		hasVideo(vidID) {
-			if(this.data.length <= 0) return false
+			if(this.data.length <= 0) return false;
 			for(let i = 0; i < this.data.length; i++) {
-				if (this.data[i].vID === vidID) return true
+				if (this.data[i].vID === vidID) return true;
 			}
 		},
 
 		// update data on specific index
 		updateKeepIdx(video) {
 			for(let i = 0; i < this.data.length; i++) {
-				if(this.data[i].vID === video.vID) this.$set(this.data, i, video)
+				if(this.data[i].vID === video.vID) this.$set(this.data, i, video);
 			}
 		},
 
 		// delete specific element
 		deleteVideo(vidID) {
-			if(this.data.length <= 0) this.data.splice(0, 1)
+			if(this.data.length <= 0) this.data.splice(0, 1);
 			for(let i = 0; i < this.data.length; i++) {
-				if(this.data[i].vID === vidID) this.data.splice(i, 1)
+				if(this.data[i].vID === vidID) this.data.splice(i, 1);
 			}
-			this.save()
+			this.save();
 		},
 
 		// save to localStorage. normally used after this.data was mutated in some way
 		// eg. update, insert, delete
 		save() {
-			localStorage.setItem("videos", JSON.stringify(this.data))
+			localStorage.setItem("videos", JSON.stringify(this.data));
 		}
 
 	},
 
-}
+};
 </script>
 
 <style scoped>
