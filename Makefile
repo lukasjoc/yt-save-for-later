@@ -17,8 +17,8 @@ bundle:
 		$(APP_DIR)/index.html \
 		$(APP_DIR)/content.js \
 		$(APP_DIR)/background.js
-
+	
 	cp $(APP_DIR)/manifest.json $(BUILD_DIR); cp -a $(APP_DIR)/assets $(BUILD_DIR)
-
+	
 	# show stats
 	tree $(BUILD_DIR)
