@@ -1,31 +1,14 @@
 {
     "name": "yt-save-for-later",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Save a youtube video for later. Resume where you left off",
     "main": "index.js",
+    "author": "lukasjoc",
+    "license": "ISC",
+    "homepage": "https://github.com/lukasjoc/yt-save-for-later",
     "scripts": {
         "lint": "eslint --fix ./src",
         "build": "rm -rf build; rm -rf .cache; parcel build -d ./build --no-source-maps ./src/index.html ./src/content.js; cp ./manifest.json ./build; cp -a ./icons ./build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lukasjoc/yt-save-for-later.git"
-    },
-    "keywords": [
-        "chrome-extension",
-        "youtube",
-        "yt-save-for-later"
-    ],
-    "author": "lukasjoc",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/lukasjoc/yt-save-for-later/issues"
-    },
-    "homepage": "https://github.com/lukasjoc/yt-save-for-later",
-    "dependencies": {
-        "buefy": "^0.9.5",
-        "vue": "^2.6.12",
-        "vue-hot-reload-api": "^2.3.4"
     },
     "devDependencies": {
         "@vue/component-compiler-utils": "^3.2.0",
@@ -33,5 +16,10 @@
         "eslint-plugin-vue": "^7.8.0",
         "parcel-bundler": "^1.12.5",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "buefy": "^0.9.5",
+        "vue": "^2.6.12",
+        "vue-hot-reload-api": "^2.3.4"
     }
 }
