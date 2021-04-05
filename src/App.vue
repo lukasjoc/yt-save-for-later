@@ -125,7 +125,6 @@ export default {
     },
 
     addVideo() {
-      console.log("added");
       const props = {
         currentWindow: true,
         active: true,
