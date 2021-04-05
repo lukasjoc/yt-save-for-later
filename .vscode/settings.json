@@ -1,0 +1,30 @@
+{
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.runtime": "",
+  "eslint.run": "onSave",
+
+  "search.exclude": {
+      "node_modules": false,
+      "dist": true,
+      "public": true
+  },
+  "[vue]": {
+      "editor.defaultFormatter": "octref.vetur"
+  },
+  "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+      "javascript",
+      "vue",
+      "json"
+  ]
+}
